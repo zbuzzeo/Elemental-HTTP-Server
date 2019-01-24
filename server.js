@@ -6,8 +6,6 @@ const fs = require('fs');
 const getHandler = require('./getHandler');
 const postHandler = require('./postHandler');
 
-console.log(getHandler);
-
 const PORT = process.env.PORT || 8080;
 
 const server = http.createServer((req, res) => {
