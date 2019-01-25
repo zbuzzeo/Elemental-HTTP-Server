@@ -4,6 +4,7 @@ const http = require('http');
 const fs = require('fs');
 const querystring = require('querystring');
 const makeTemplate = require('./elementTemplate');
+const makeIndex = require('./indexTemplate');
 
 const postHandler = (req, res) => {
   console.log(`req.url is: ${req.url}`);
@@ -25,22 +26,24 @@ const postHandler = (req, res) => {
         fs.writeFile(`./public/${req.url.slice(1)}`, data, (err) => {
           if (err) { throw err; }
         });
+
+        makeIndex(req.url.slice(1), body.elementName);
         
         res.writeHead(200, { 
           'Content-Type' : 'application/json', 
         });
         res.end(`{ 
           "message": "Your file has been saved.",
-          "success": false }
-          `);
+          "success": true }
+        `);
 
       } else {
         res.writeHead(400, { 
           'Content-Type' : 'application/json', 
         });
         res.end(`{ 
-        "message": "The file already exists!",
-        "success": false }
+          "message": "The file already exists!",
+          "success": false }
         `);
       }
     });

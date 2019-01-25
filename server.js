@@ -5,6 +5,8 @@ const fs = require('fs');
 
 const getHandler = require('./getHandler');
 const postHandler = require('./postHandler');
+const putHandler = require('./putHandler');
+
 
 const PORT = process.env.PORT || 8080;
 
@@ -17,6 +19,9 @@ const server = http.createServer((req, res) => {
       break;
     case 'POST':
       postHandler(req, res);
+      break;
+    case 'PUT':
+      putHandler(req, res);
       break;
   }
 });
