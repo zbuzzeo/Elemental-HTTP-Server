@@ -1,10 +1,9 @@
 'use strict';
 
-const http = require('http');
 const fs = require('fs');
 const querystring = require('querystring');
 const makeTemplate = require('./elementTemplate');
-const makeIndex = require('./indexTemplate');
+const updateIndex = require('./indexTemplate');
 
 const postHandler = (req, res) => {
   console.log(`req.url is: ${req.url}`);
@@ -27,7 +26,7 @@ const postHandler = (req, res) => {
           if (err) { throw err; }
         });
 
-        makeIndex(req.url.slice(1), body.elementName);
+        updateIndex(req.url.slice(1), body.elementName);
         
         res.writeHead(200, { 
           'Content-Type' : 'application/json', 

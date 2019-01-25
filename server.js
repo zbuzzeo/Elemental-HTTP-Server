@@ -1,8 +1,8 @@
 'use strict';
 
-const http = require('http');
-const fs = require('fs');
+'use strict';
 
+const http = require('http');
 const getHandler = require('./getHandler');
 const postHandler = require('./postHandler');
 const putHandler = require('./putHandler');

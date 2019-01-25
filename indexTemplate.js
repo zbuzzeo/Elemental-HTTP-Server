@@ -1,12 +1,9 @@
 'use strict';
 
-const http = require('http');
 const fs = require('fs');
-const querystring = require('querystring');
 
-const makeIndex = (path, elementName) => {
-  let countElements = 0;
-
+const updateIndex = (path, elementName) => {
+  // narrow down file directory to element .html files only
   fs.readdir('./public', 'utf8', (err, files) => {
     const elementFiles = files
       .filter(file => {
@@ -16,8 +13,9 @@ const makeIndex = (path, elementName) => {
         return file !== 'index.html' && file !== '404.html';
       });
 
-    countElements = elementFiles.length;
+    let countElements = elementFiles.length;
 
+    // break up the HTML to insert new elements with ease
     let indexHTML = `
       <!DOCTYPE html>
       <html lang="en">
@@ -39,6 +37,7 @@ const makeIndex = (path, elementName) => {
       </html>
     `;
 
+    // embed basic element information within li and anchor tags and append them to the HTML
     const filesToHTML = elementFiles.map(file => {
       const updateInnerHTML = file.slice(1, -5);
       const pageFormat = `
@@ -52,6 +51,7 @@ const makeIndex = (path, elementName) => {
 
     indexHTML += indexHTMLClosed;
 
+    // take the modified index.html and overwrite the old one
     fs.writeFile('./public/index.html', indexHTML, (err) => {
       if (err) { throw err; }
   
@@ -63,4 +63,4 @@ const makeIndex = (path, elementName) => {
   });
 }
 
-module.exports = makeIndex;
+module.exports = updateIndex;
